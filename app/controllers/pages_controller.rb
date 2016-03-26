@@ -13,23 +13,21 @@ class PagesController < ApplicationController
         token             = session[:stranger_id]
         first_visited_at  = session[:first_visited_at]
         visit_time        = ( (Time.now - Time.parse(first_visited_at)) / 60 ).to_i
+
+        cache.write(token, true, expires_in: 1.minute) if cache.fetch(token).nil?
       else
         token                      = Devise.friendly_token
         session[:stranger_id]      = token
         session[:first_visited_at] = Time.now
-        cache.write(token, true, expires_in: 1.minute)
         visit_time = 0
+
+        cache.write(token, true, expires_in: 1.minute)
       end
+
 
       @data = {
         visit_time: visit_time
       }
     end
   end
-
-  private
-
-    def cache
-      @_cache ||= Rails.cache
-    end
 end
