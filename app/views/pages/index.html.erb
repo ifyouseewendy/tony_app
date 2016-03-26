@@ -1,11 +1,13 @@
 <% content_for :top_content do %>
   <div class="jumbotron">
     <div class="container">
-      <h1>Welcome!</h1>
-      <p>Register to get started.</p>
-      <p>
-        <%= link_to 'Register', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
-      </p>
+      <% if current_user %>
+        <p><%= "#{@data[:user_name]} 谢谢你登录了我们网站！你已经登录了 #{@data[:sign_in_count]} 次了，总共登录时间是 #{@data[:sign_in_minute]} 分钟了。" %></p>
+        <p>
+          <%= link_to '注册', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+        </p>
+      <% else %>
+      <% end %>
     </div>
   </div>
 <% end %>
