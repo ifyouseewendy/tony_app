@@ -1,12 +1,17 @@
 <% content_for :top_content do %>
   <div class="jumbotron">
     <div class="container">
-      <% if current_user %>
-        <p><%= "#{@data[:user_name]} 谢谢你登录了我们网站！你已经登录了 #{@data[:sign_in_count]} 次了，总共登录时间是 #{@data[:sign_in_minute]} 分钟了。" %></p>
+      <% if @data[:user_signed_in] %>
+        <p><%= "#{@data[:user_name]} 谢谢你登录了我们网站！你已经登录了 #{@data[:sign_in_count]} 次了，总共登录时间是 #{@data[:sign_in_time]} 分钟了。" %></p>
         <p>
-          <%= link_to '注册', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+          <%= link_to '注销', destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-lg' %>
         </p>
       <% else %>
+        <p><%= "你好，陌生人！你没有登录，或者你还没有注册，但是你已经浏览这个页面 #{@data[:visit_time]} 分钟了。"%></p>
+        <p>
+          <%= link_to '登陆', new_user_session_path, class: 'btn btn-primary btn-lg' %>
+          <%= link_to '注册', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
+        </p>
       <% end %>
     </div>
   </div>
