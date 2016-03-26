@@ -13,6 +13,8 @@
           <%= link_to '注册', new_user_registration_path, class: 'btn btn-primary btn-lg' %>
         </p>
       <% end %>
+
+      <p><%= "现在总共有 #{@data[:user_count]} 个注册用户在查看这个网站，有 #{@data[:stranger_count]} 个陌生人在查看这个网站" %></p>
     </div>
   </div>
 <% end %>

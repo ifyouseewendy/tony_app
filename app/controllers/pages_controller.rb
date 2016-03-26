@@ -29,5 +29,10 @@ class PagesController < ApplicationController
         visit_time: visit_time
       }
     end
+
+    @data.merge!({
+      user_count: User.count,
+      stranger_count: cache.instance_variable_get(:@data).keys.count
+    })
   end
 end
