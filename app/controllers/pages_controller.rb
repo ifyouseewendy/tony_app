@@ -10,12 +10,14 @@ class PagesController < ApplicationController
       render :index
     else
       if session[:stranger_id].present?
-        token = session[:stranger_id]
-        visit_time = ( (Time.now - cache.fetch(token)) / 60 ).to_i
+        token             = session[:stranger_id]
+        first_visited_at  = session[:first_visited_at]
+        visit_time        = ( (Time.now - Time.parse(first_visited_at)) / 60 ).to_i
       else
-        token = Devise.friendly_token
-        session[:stranger_id] = token
-        cache.write(token, Time.now, expires_in: 1.minute)
+        token                      = Devise.friendly_token
+        session[:stranger_id]      = token
+        session[:first_visited_at] = Time.now
+        cache.write(token, true, expires_in: 1.minute)
         visit_time = 0
       end
 
