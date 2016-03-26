@@ -7,7 +7,6 @@ class PagesController < ApplicationController
         sign_in_count: current_user.sign_in_count,
         sign_in_time: ( (Time.now - current_user.current_sign_in_at) / 60 ).to_i
       }
-      render :index
     else
       if session[:stranger_id].present?
         token             = session[:stranger_id]
